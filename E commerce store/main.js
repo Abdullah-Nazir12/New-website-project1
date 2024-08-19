@@ -61,17 +61,17 @@ let popular = [
 ];
 
 function addPopularProducts(){
-  clutter = "" ;
+ var clutter = "" ;
  
   popular.forEach(function(product){
     clutter += `<div class="popular bg-white p-2 rounded-2xl flex items-start gap-3 w-[60%] flex-shrink-0">
                     <div class="w-20 h-20 bg-red-500 flex-shrink-0 rounded-2xl border-4 border-white overflow-hidden">
                         <img class="w-full h-full object-cover"
-                            src="${popular.image}"
+                            src="${product.image}"
                             alt="">
                     </div>
                     <div class="data py-2 w-full">
-                        <h1 class="leading-none font-semibold">${popular.name}</h1>
+                        <h1 class="leading-none font-semibold">${product.name}</h1>
                         <h4 class="leading-none mt-2 text-sm font-semibold opacity-20">${popular.description}</h4>
                         <h4 class="mt-3 font-semibold text-zinc-500">${popular.price}</h4>
                     </div>
@@ -83,7 +83,7 @@ function addPopularProducts(){
 
 function productAdding() {
   let clutter = "";
-  products.forEach(function (product) {
+  products.forEach(function (product , index) {
     clutter += `<div class="product w-fit rounded-xl p-2 bg-white">
                 <div class="image w-[14rem] h-[13rem] bg-zinc-200 rounded-xl">
                 <img class="w-full h-full object-cover overflow-hidden" src="${product.image}"/></div>
@@ -94,14 +94,26 @@ function productAdding() {
                             <h3 class="font-semibold opacity-20">${product.description}</h3>
                             <h4 class="font-semibold mt-2">${product.price}</h4>
                         </div>
-                        <button class="w-10 h-10 rounded-full shader text-yellow-400"><i
-                                class="ri-add-line"></i></button>
+                        <button data-index="${index}" class=" add w-10 h-10 rounded-full shader text-yellow-400"><i
+                             data-index="${index}"class=" add ri-add-line"></i></button>
                     </div>
                 </div>
             </div>`;
   });
   document.querySelector(".products").innerHTML = clutter;
 }
-
+let cart = [];
+function addToCart(){
+  document.querySelector(".products") 
+  .addEventListener("click" ,function(details){
+    if(details.target.classList.contains("add")){
+     cart.push(products[ details.target.dataset.index])
+     console.log(cart);
+     
+     
+    }
+  } )
+}
+addToCart()
 productAdding();
 addPopularProducts();
